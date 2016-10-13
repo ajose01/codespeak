@@ -14,32 +14,40 @@ include Facebook::Messenger
 
 
 # Sample 2
+# Bot.on :message do |message|
+#   incoming_message = message.text.strip.downcase
+#   case incoming_message
+#   when "tacos"
+#     Bot.deliver(
+#       recipient: message.sender,
+#       message: {
+#         text: "OMG WE LOOOOOVE TACOS!!!! 🌮🌮🌮🌮"
+#       }
+#     )
+#   when "pirate"
+#     query = {"text" => "Hey LA Ruby! You are the most awesome people in the world"}
+#     response = HTTParty.get("http://isithackday.com/arrpi.php", query: query)
+#     message_text = response.parsed_response
+#     Bot.deliver(
+#       recipient: message.sender,
+#       message: {
+#         text: message_text
+#       }
+#     )
+#   else
+#     Bot.deliver(
+#       recipient: message.sender,
+#       message: {
+#         text: "Hello LA Ruby!\nWhat would you like me to do?"
+#       }
+#     )
+#   end
+# end
+
+# Sample 3
 Bot.on :message do |message|
-  incoming_message = message.text.strip.downcase
-  case incoming_message
-  when "tacos"
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "OMG WE LOOOOOVE TACOS!!!! 🌮🌮🌮🌮"
-      }
-    )
-  when "pirate"
-    query = {"text" => "Hey LA Ruby! You are the most awesome people in the world"}
-    response = HTTParty.get("http://isithackday.com/arrpi.php", query: query)
-    message_text = response.parsed_response
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: message_text
-      }
-    )
-  else
-    Bot.deliver(
-      recipient: message.sender,
-      message: {
-        text: "Hello LA Ruby!\nWhat would you like me to do?"
-      }
-    )
-  end
+  puts message.inspect
+  bot_message = BotMessage.new(:facebook, message)
+  puts bot_message.inspect
+  Platform::Fb.on_receive_message bot_message
 end
