@@ -46,8 +46,6 @@ include Facebook::Messenger
 
 # Sample 3
 Bot.on :message do |message|
-  puts message.inspect
   bot_message = BotMessage.new(:facebook, message)
-  puts bot_message.inspect
   Platform::Fb.on_receive_message bot_message
 end
